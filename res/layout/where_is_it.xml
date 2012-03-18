@@ -3,10 +3,34 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <TextView
+    <LinearLayout 
+        android:id="@+id/question"
         android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+    <TextView 
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
-
+        android:text="@string/where_is_it"/>
+    <Button
+        android:id="@+id/validate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/validate" />
+    </LinearLayout>
+    <TextView 
+        android:id="@+id/result"
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:visibility="invisible"
+	/>
+    
+    <com.google.android.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:enabled="true"
+        android:clickable="true"
+        android:apiKey="0a_khBDiJlTr10pzQgDoErWmTLDYFk0gO8DtLmg"
+        />
 </LinearLayout>

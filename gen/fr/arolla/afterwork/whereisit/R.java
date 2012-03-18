@@ -5,16 +5,21 @@
  * should not be modified by hand.
  */
 
-package fr.arolla.afterwork;
+package fr.arolla.afterwork.whereisit;
 
 public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int eiffel_tower=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int newGame=0x7f050000;
+        public static final int image=0x7f050000;
+        public static final int map_view=0x7f050004;
+        public static final int question=0x7f050001;
+        public static final int result=0x7f050003;
+        public static final int validate=0x7f050002;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -24,7 +29,9 @@ public final class R {
         public static final int activity_main=0x7f040002;
         public static final int activity_where_is_it=0x7f040003;
         public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int eiffel_tower=0x7f040006;
         public static final int new_game=0x7f040004;
+        public static final int validate=0x7f040005;
+        public static final int where_is_it=0x7f040000;
     }
 }

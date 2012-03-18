@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Où est-ce ?</string>
+    <string name="where_is_it">Où est-ce ?</string>
     <string name="app_name">WhereIsIt</string>
     <string name="activity_main">This is my game</string>
     <string name="activity_where_is_it">Find on the map</string>
     <string name="new_game">Nouvelle partie</string>
+    <string name="validate">Valider</string>
+    <string name="eiffel_tower">Tour Eiffel</string>
 
 </resources>
