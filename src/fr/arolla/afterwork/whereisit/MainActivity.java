@@ -14,11 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
-import com.google.api.services.picasa.model.AlbumFeed;
-import com.google.api.services.picasa.model.PhotoEntry;
 import com.google.gdata.client.photos.PicasawebService;
+import com.google.gdata.data.photos.AlbumFeed;
+import com.google.gdata.data.photos.PhotoEntry;
 
-import fr.arolla.afterwork.whereisit.MainActivity.PhotoOnClickListener;
 import fr.arolla.afterwork.whereisit.db.WhereIsItDBAdapter;
 
 public class MainActivity extends Activity {
