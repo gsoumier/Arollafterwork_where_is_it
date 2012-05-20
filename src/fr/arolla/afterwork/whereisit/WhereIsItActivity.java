@@ -2,6 +2,7 @@ package fr.arolla.afterwork.whereisit;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -23,36 +24,32 @@ import fr.arolla.afterwork.whereisit.overlays.UserResultsOverlay;
 
 public class WhereIsItActivity extends MapActivity {
 
-	private MapView mapView;
+	private TextView text;
+	private Button validateButton;
 
+	private MapView mapView;
 	private MapController mapController;
+	private List<Overlay> overlays;
 
 	private UserResultsOverlay userResultsOverlay;
-
-	private Location eiffelTowerLocation;
-	private GeoPoint eiffelTowerGeoPoint;
-
-	private static final double EIFFEL_TOWER_LAT = 48.858871;
-	private static final double EIFFEL_TOWER_LNG = 2.294598;
 
 	private static final double PARIS_LAT = 48.860649;
 	private static final double PARIS_LNG = 2.352448;
 
-	private View questionLayout;
-	private TextView resultText;
+	private Location photoLocation;
+	private GeoPoint photoGeoPoint;
+	private String photoDescription;
 
-	private List<Overlay> overlays;
+	private int distance;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.where_is_it);
 
-		questionLayout = findViewById(R.id.question);
-		resultText = (TextView) findViewById(R.id.result);
+		text = (TextView) findViewById(R.id.text);
 
-		initEiffelTowerLocationAndPoint();
+		initPhotoInformations();
 
 		mapView = (MapView) findViewById(R.id.map_view);
 		mapController = mapView.getController();
@@ -68,38 +65,48 @@ public class WhereIsItActivity extends MapActivity {
 		overlays = mapView.getOverlays();
 		overlays.add(userResultsOverlay);
 
-		Button validateButton = (Button) findViewById(R.id.validate);
+		validateButton = (Button) findViewById(R.id.validate);
 		validateButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				handleUserValidation();
 			}
-
 		});
 	}
 
-	private void initEiffelTowerLocationAndPoint() {
-		eiffelTowerLocation = new Location(LocationManager.GPS_PROVIDER);
-		eiffelTowerLocation.setLatitude(EIFFEL_TOWER_LAT);
-		eiffelTowerLocation.setLongitude(EIFFEL_TOWER_LNG);
-		eiffelTowerGeoPoint = getGeoPoint(EIFFEL_TOWER_LAT, EIFFEL_TOWER_LNG);
+	private void initPhotoInformations() {
+		Intent callIntent = getIntent();
+		double photoLat = callIntent.getDoubleExtra("lat", PARIS_LAT);
+		double photoLng = callIntent.getDoubleExtra("lng", PARIS_LNG);
+		photoLocation = new Location(LocationManager.GPS_PROVIDER);
+		photoLocation.setLatitude(photoLat);
+		photoLocation.setLongitude(photoLng);
+		photoGeoPoint = getGeoPoint(photoLat, photoLng);
+		photoDescription = callIntent.getStringExtra("desc");
 	}
 
-	protected void handleUserValidation() {
+	private void handleUserValidation() {
 		GeoPoint userAnswerPoint = userResultsOverlay.getPoint();
 		Location userAnswerLocation = getUserAnswerLocation(userAnswerPoint);
-		float distanceTo = eiffelTowerLocation.distanceTo(userAnswerLocation);
-		int roundDistance = Math.round(distanceTo);
-		questionLayout.setVisibility(View.INVISIBLE);
-		resultText.setText(roundDistance + " meters");
-		resultText.setVisibility(View.VISIBLE);
+		float distanceTo = photoLocation.distanceTo(userAnswerLocation);
+		distance = Math.round(distanceTo);
+		text.setText(distance + " meters");
 		Drawable starIconOn = Resources.getSystem().getDrawable(
 				android.R.drawable.btn_star_big_on);
 		ItIsHereOverlay resultOverlay = new ItIsHereOverlay(starIconOn,
-				eiffelTowerGeoPoint, "Eiffel Tower",
-				"Eiffel tower was built as the entrance arch to the 1889 World's Fair");
+				photoGeoPoint, photoDescription, "test");
 		overlays.add(resultOverlay);
 		mapView.setEnabled(false);
+		validateButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				goToNextPhoto();
+			}
+		});
+	}
 
+	private void goToNextPhoto() {
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra("distance", distance);
+		setResult(RESULT_OK, resultIntent);
 	}
 
 	private Location getUserAnswerLocation(GeoPoint userAnswerPoint) {

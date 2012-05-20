@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="libs/gdata-photos-meta-2.0.jar"/>
 	<classpathentry kind="lib" path="libs/mail.jar"/>
 	<classpathentry kind="lib" path="libs/servlet-api.jar"/>
+	<classpathentry kind="lib" path="libs/guava-11.0.2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
