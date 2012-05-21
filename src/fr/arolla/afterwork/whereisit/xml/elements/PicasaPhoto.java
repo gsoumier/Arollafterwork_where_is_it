@@ -5,7 +5,11 @@ import java.util.List;
 
 public class PicasaPhoto {
 
-	private String name;
+	private String id;
+
+	private String title;
+
+	private String description;
 
 	private String link;
 
@@ -15,12 +19,28 @@ public class PicasaPhoto {
 
 	private Double longitude;
 
-	public String getName() {
-		return name;
+	public String getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getLink() {
@@ -37,6 +57,14 @@ public class PicasaPhoto {
 
 	public void setThumbnailUrlList(List<String> thumbnailUrlList) {
 		this.thumbnailUrlList = thumbnailUrlList;
+	}
+
+	public void addThumbnailUrl(String thumbnailUrl) {
+		thumbnailUrlList.add(thumbnailUrl);
+	}
+
+	public void removeThumbnailUrl(String thumbnailUrl) {
+		thumbnailUrlList.remove(thumbnailUrl);
 	}
 
 	public Double getLatitude() {

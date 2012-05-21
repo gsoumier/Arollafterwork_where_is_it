@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,14 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-
-import com.google.gdata.data.Link;
-import com.google.gdata.data.geo.Point;
-import com.google.gdata.data.photos.AlbumFeed;
-import com.google.gdata.data.photos.GphotoEntry;
-import com.google.gdata.data.photos.PhotoFeed;
-
-import fr.arolla.afterwork.whereisit.services.PicasaWebServiceFacade;
+import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
+import fr.arolla.afterwork.whereisit.xml.elements.PicasaPhoto;
+import fr.arolla.afterwork.whereisit.xml.parser.PicasaAlbumXmlHandler;
 
 public class MainActivity extends Activity {
 
@@ -37,9 +31,9 @@ public class MainActivity extends Activity {
 
 	private float totalScore;
 
-	private Iterator<GphotoEntry> photoIterator;
+	private Iterator<PicasaPhoto> photoIterator;
 
-	private PhotoFeed currentPhotoFeed;
+	private PicasaPhoto currentPhoto;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +46,12 @@ public class MainActivity extends Activity {
 
 		try {
 			URL feedUrl = new URL(albumUrl);
-			AlbumFeed feed = PicasaWebServiceFacade.getService().getFeed(
-					feedUrl, AlbumFeed.class);
-			List<GphotoEntry> entries = feed.getEntries();
-			albumSize = entries.size();
-			photoIterator = entries.iterator();
+			URLConnection urlC = feedUrl.openConnection();
+			InputStream is = urlC.getInputStream();
+			PicasaAlbumXmlHandler xmlHandler = new PicasaAlbumXmlHandler();
+			PicasaAlbum picasaAlbum = xmlHandler.parse(is);
+			albumSize = picasaAlbum.albumSize();
+			photoIterator = picasaAlbum.iterator();
 		} catch (Exception e) {
 			Log.e(TAG, "Error occured while retriving picasa album from URL : "
 					+ albumUrl, e);
@@ -67,35 +62,16 @@ public class MainActivity extends Activity {
 	}
 
 	private void showNextPhotoOrResult() {
-		updateCurrentPhotoFeed();
-		if (currentPhotoFeed != null) {
+		if (photoIterator.hasNext()) {
+			currentPhoto = photoIterator.next();
 			showNextPhoto();
 		} else {
 			showResult();
 		}
 	}
 
-	private void updateCurrentPhotoFeed() {
-		currentPhotoFeed = null;
-		if (photoIterator.hasNext()) {
-			GphotoEntry photoEntry = photoIterator.next();
-			Link link = photoEntry.getLink(Link.Rel.FEED, null);
-			String photoUrl = link.getHref();
-			try {
-				URL url = new URL(photoUrl);
-				currentPhotoFeed = PicasaWebServiceFacade.getService().getFeed(
-						url, PhotoFeed.class);
-			} catch (Exception e) {
-				Log.e(TAG,
-						"Error occured while retriving picasa photo from URL : "
-								+ photoUrl, e);
-			}
-		}
-	}
-
 	private void showNextPhoto() {
-		String thumbnailUrlStr = currentPhotoFeed.getMediaThumbnails().get(1)
-				.getUrl();
+		String thumbnailUrlStr = currentPhoto.getThumbnailUrlList().get(2);
 		Drawable photoDrawable = null;
 		try {
 			URL thumbnailUrl = new URL(thumbnailUrlStr);
@@ -149,11 +125,9 @@ public class MainActivity extends Activity {
 
 		public void onClick(View v) {
 			Intent intent = new Intent("WhereIsIt");
-			Point geoLocation = currentPhotoFeed.getGeoLocation();
-			intent.putExtra("lat", geoLocation.getLatitude());
-			intent.putExtra("lng", geoLocation.getLongitude());
-			intent.putExtra("tip", currentPhotoFeed.getDescription()
-					.getPlainText());
+			intent.putExtra("lat", currentPhoto.getLatitude());
+			intent.putExtra("lng", currentPhoto.getLongitude());
+			intent.putExtra("tip", currentPhoto.getDescription());
 			startActivityForResult(intent, SHOW_MAP);
 		}
 
