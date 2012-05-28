@@ -2,16 +2,18 @@ package fr.arolla.afterwork.whereisit;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -24,14 +26,17 @@ import fr.arolla.afterwork.whereisit.overlays.UserResultsOverlay;
 
 public class WhereIsItActivity extends MapActivity {
 
-	private TextView text;
-	private Button validateButton;
-
 	private MapView mapView;
 	private MapController mapController;
 	private List<Overlay> overlays;
 
 	private UserResultsOverlay userResultsOverlay;
+
+	private boolean showValidateBtn = false;
+	private boolean showNextBtn = false;
+
+	private MenuItem validateItem;
+	private MenuItem nextItem;
 
 	private static final double PARIS_LAT = 48.860649;
 	private static final double PARIS_LNG = 2.352448;
@@ -47,16 +52,26 @@ public class WhereIsItActivity extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.where_is_it);
 
-		text = (TextView) findViewById(R.id.text);
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle("1/10");
+		actionBar.setSubtitle("Placer sur la carte");
 
 		initPhotoInformations();
 
 		mapView = (MapView) findViewById(R.id.map_view);
 		mapController = mapView.getController();
+		mapView.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if (!showValidateBtn && !showNextBtn) {
+					showValidateBtn = true;
+					invalidateOptionsMenu();
+				}
+			}
+		});
 
 		GeoPoint paris = getGeoPoint(PARIS_LAT, PARIS_LNG);
 		mapController.animateTo(paris);
-		mapController.setZoom(12);
+		mapController.setZoom(13);
 
 		Drawable starIconOff = Resources.getSystem().getDrawable(
 				android.R.drawable.btn_star_big_off);
@@ -64,13 +79,44 @@ public class WhereIsItActivity extends MapActivity {
 
 		overlays = mapView.getOverlays();
 		overlays.add(userResultsOverlay);
+	}
 
-		validateButton = (Button) findViewById(R.id.validate);
-		validateButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				handleUserValidation();
-			}
-		});
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.where_is_it_menu, menu);
+		validateItem = menu.findItem(R.id.action_validate);
+		nextItem = menu.findItem(R.id.action_next);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (showValidateBtn) {
+			validateItem.setVisible(true);
+			nextItem.setVisible(false);
+			return true;
+		}
+		if (showNextBtn) {
+			validateItem.setVisible(false);
+			nextItem.setVisible(true);
+			return true;
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_validate:
+			validatePosition();
+			return true;
+		case R.id.action_next:
+			goToNextPhoto();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private void initPhotoInformations() {
@@ -84,29 +130,31 @@ public class WhereIsItActivity extends MapActivity {
 		photoDescription = callIntent.getStringExtra("desc");
 	}
 
-	private void handleUserValidation() {
+	private void validatePosition() {
 		GeoPoint userAnswerPoint = userResultsOverlay.getPoint();
 		Location userAnswerLocation = getUserAnswerLocation(userAnswerPoint);
 		float distanceTo = photoLocation.distanceTo(userAnswerLocation);
 		distance = Math.round(distanceTo);
-		text.setText(distance + " meters");
+		String subTitle = getResources().getString(R.string.distance)
+				+ distance + getResources().getString(R.string.meters);
+		getActionBar().setSubtitle(subTitle);
 		Drawable starIconOn = Resources.getSystem().getDrawable(
 				android.R.drawable.btn_star_big_on);
 		ItIsHereOverlay resultOverlay = new ItIsHereOverlay(starIconOn,
 				photoGeoPoint, photoDescription, "test");
 		overlays.add(resultOverlay);
-		mapView.setEnabled(false);
-		validateButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				goToNextPhoto();
-			}
-		});
+		userResultsOverlay.setEnabled(false);
+		mapController.animateTo(photoGeoPoint);
+		showNextBtn = true;
+		showValidateBtn = false;
+		invalidateOptionsMenu();
 	}
 
 	private void goToNextPhoto() {
 		Intent resultIntent = new Intent();
 		resultIntent.putExtra("distance", distance);
 		setResult(RESULT_OK, resultIntent);
+		this.finish();
 	}
 
 	private Location getUserAnswerLocation(GeoPoint userAnswerPoint) {

@@ -17,7 +17,8 @@
 	        android:id="@+id/validate"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/validate" />
+	        android:text="@string/action_item_validate" 
+	        android:visibility="invisible"/>
     </LinearLayout>
     
     <com.google.android.maps.MapView
@@ -26,6 +27,6 @@
         android:layout_height="fill_parent"
         android:state_enabled="true"
         android:clickable="true"
-        android:apiKey="0a_khBDiJlTr10pzQgDoErWmTLDYFk0gO8DtLmg"
+        android:apiKey="0a_khBDiJlTqVA3Lyc8LEpXwSDLUu5cRGgdlgZg"
         />
 </LinearLayout>

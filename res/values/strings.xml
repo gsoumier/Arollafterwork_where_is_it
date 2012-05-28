@@ -2,12 +2,16 @@
 <resources>
 
     <string name="where_is_it">Où est-ce ?</string>
-    <string name="app_name">WhereIsIt</string>
-    <string name="activity_main">This is my game</string>
-    <string name="activity_where_is_it">Find on the map</string>
+    <string name="app_name">Where Is It ?</string>
+    <string name="activity_main">Où est-ce ?</string>
+    <string name="activity_where_is_it">Placer sur la carte</string>
+    <string name="activity_result">Résultat</string>
     <string name="new_game">Nouvelle partie</string>
-    <string name="validate">Valider</string>
-    <string name="eiffel_tower">Tour Eiffel</string>
+    <string name="action_item_validate">Valider</string>
+    <string name="action_item_play">Jouer</string>
+    <string name="action_item_next">Poursuivre</string>
     <string name="result">Votre resultat : </string>
+    <string name="distance">Distance : </string>
+    <string name="meters"> mètres</string>
 
 </resources>

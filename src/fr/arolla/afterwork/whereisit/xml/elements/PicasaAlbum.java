@@ -51,4 +51,22 @@ public class PicasaAlbum implements Iterable<PicasaPhoto> {
 	public Iterator<PicasaPhoto> iterator() {
 		return photos.iterator();
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof PicasaAlbum)) {
+			return false;
+		}
+		PicasaAlbum other = (PicasaAlbum) o;
+		if (id != null) {
+			return id.equals(other.id);
+		}
+		return this == o;
+	}
+
+	@Override
+	public String toString() {
+		return "PicasaAlbum{title=" + title + ",id=" + id + "}";
+	}
+
 }

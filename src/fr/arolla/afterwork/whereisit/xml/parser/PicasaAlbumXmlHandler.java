@@ -27,8 +27,6 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 	private static final String GEO_RSS_NS = "http://www.georss.org/georss";
 	private static final String GML_NS = "http://www.opengis.net/gml";
 
-	private Element geoRssElement;
-
 	public PicasaAlbum parse(InputStream is) {
 		RootElement root = new RootElement(ATOM_NS, "feed");
 		Element albumIdElement = root.getChild(ATOM_NS, "id");
@@ -46,9 +44,7 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 		Element photoThumbnailElement = mediaGroupElement.getChild(MEDIA_NS,
 				"thumbnail");
 
-		geoRssElement = photoElement.getChild(GEO_RSS_NS, "where");
-		Element geoRssElement2 = photoElement
-				.getChild("http://www.georss.org/georss:where");
+		Element geoRssElement = photoElement.getChild(GEO_RSS_NS, "where");
 		Element gmlPointElement = geoRssElement.getChild(GML_NS, "Point");
 		Element gmlPosElement = gmlPointElement.getChild(GML_NS, "pos");
 
@@ -118,22 +114,6 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 				photo.setLatitude(lat);
 				Double lng = Double.parseDouble(split[1]);
 				photo.setLongitude(lng);
-			}
-		});
-
-		geoRssElement.setStartElementListener(new StartElementListener() {
-			public void start(Attributes attributes) {
-				Log.d(TAG, "dans geoRss:Where");
-			}
-		});
-		gmlPointElement.setStartElementListener(new StartElementListener() {
-			public void start(Attributes attributes) {
-				Log.d(TAG, "dans gml:point");
-			}
-		});
-		gmlPosElement.setStartElementListener(new StartElementListener() {
-			public void start(Attributes attributes) {
-				Log.d(TAG, "dans gml:pos");
 			}
 		});
 

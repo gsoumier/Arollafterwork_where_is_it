@@ -83,4 +83,22 @@ public class PicasaPhoto {
 		this.longitude = longitude;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof PicasaPhoto)) {
+			return false;
+		}
+		PicasaPhoto other = (PicasaPhoto) o;
+		if (id != null) {
+			return id.equals(other.id);
+		}
+		return this == o;
+	}
+
+	@Override
+	public String toString() {
+		return "PicasaPhoto{title=" + title + ",id=" + id + ",desc="
+				+ description + "}";
+	}
+
 }

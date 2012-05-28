@@ -10,7 +10,7 @@ public class ResultActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.result);
 
 		Intent callIntent = getIntent();
 		Float score = callIntent.getFloatExtra("score", 0f);
