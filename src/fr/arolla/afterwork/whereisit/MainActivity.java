@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaPhoto;
-import fr.arolla.afterwork.whereisit.xml.parser.PicasaAlbumXmlHandler;
+import fr.arolla.afterwork.whereisit.xml.parser.AlbumFeedParser;
 
 public class MainActivity extends Activity {
 
@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void showNextPhotoOrResult() {
-		if (photoIterator.hasNext()) {
+		if (photoIterator != null && photoIterator.hasNext()) {
 			currentPhoto = photoIterator.next();
 			showNextPhoto();
 		} else {
@@ -110,11 +110,14 @@ public class MainActivity extends Activity {
 		protected PicasaAlbum doInBackground(String... params) {
 			PicasaAlbum picasaAlbum = null;
 			try {
-				URL feedUrl = new URL(params[0]);
-				URLConnection urlC = feedUrl.openConnection();
-				InputStream is = urlC.getInputStream();
-				PicasaAlbumXmlHandler xmlHandler = new PicasaAlbumXmlHandler();
-				picasaAlbum = xmlHandler.parse(is);
+				// URL feedUrl = new URL(params[0]);
+				// URLConnection urlC = feedUrl.openConnection();
+				// InputStream is = urlC.getInputStream();
+				// PicasaAlbumXmlHandler xmlHandler = new
+				// PicasaAlbumXmlHandler();
+				// picasaAlbum = xmlHandler.parse(is);
+				AlbumFeedParser parser = new AlbumFeedParser();
+				parser.parse(params[0]);
 			} catch (Exception e) {
 				Log.e(TAG,
 						"Error occured while retriving picasa album from URL : "
