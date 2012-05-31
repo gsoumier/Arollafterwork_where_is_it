@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -53,9 +55,12 @@ public class MainActivity extends Activity {
 
 	private ProgressDialog mImgLoadDialog;
 
+	private Map<String, Position> locationMockMap;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		fillLocationMockMap();
 		setContentView(R.layout.main);
 		imageView = (ImageView) findViewById(R.id.image);
 		mImgWait = Resources.getSystem().getDrawable(
@@ -184,9 +189,9 @@ public class MainActivity extends Activity {
 	}
 
 	private float getPointsFromDistance(int distance) {
-		if (distance > 1000)
+		if (distance > 20000)
 			return 0;
-		float coeff = 1f - (float) distance / 1000f;
+		float coeff = 1f - (float) distance / 20000f;
 		float result = 10 * coeff;
 		return result;
 	}
@@ -195,10 +200,73 @@ public class MainActivity extends Activity {
 
 		public void onClick(View v) {
 			Intent intent = new Intent("WhereIsIt");
-			intent.putExtra("lat", currentPhoto.getLatitude());
-			intent.putExtra("lng", currentPhoto.getLongitude());
+			String photoId = currentPhoto.getId();
+			locationMockMap.get(photoId);
+			intent.putExtra("lat", getLatitude(currentPhoto));
+			intent.putExtra("lng", getLongitude(currentPhoto));
 			intent.putExtra("tip", currentPhoto.getDescription());
 			startActivityForResult(intent, SHOW_MAP);
+		}
+
+		private Double getLatitude(PicasaPhoto currentPhoto) {
+			if (currentPhoto.getLatitude() != null) {
+				return currentPhoto.getLatitude();
+			}
+			Position position = locationMockMap.get(currentPhoto.getId());
+			if (position == null) {
+				return null;
+			}
+			return position.getLat();
+		}
+
+		private Double getLongitude(PicasaPhoto currentPhoto) {
+			if (currentPhoto.getLongitude() != null) {
+				return currentPhoto.getLongitude();
+			}
+			Position position = locationMockMap.get(currentPhoto.getId());
+			if (position == null) {
+				return null;
+			}
+			return position.getLng();
+		}
+
+	}
+
+	private void fillLocationMockMap() {
+		locationMockMap = new HashMap<String, Position>();
+		locationMockMap
+				.put("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748107040104845138",
+						new Position(48.865916, 2.225677));
+		locationMockMap
+				.put("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748477498962023090",
+						new Position(48.612729, -1.505180));
+		locationMockMap
+				.put("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748478389030221938",
+						new Position(45.767500, 4.828889));
+		locationMockMap
+				.put("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748478868755550402",
+						new Position(45.328611, 3.708611));
+		locationMockMap
+				.put("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748479441511849042",
+						new Position(-22.947447, -43.1564));
+
+	}
+
+	class Position {
+		double lat;
+		double lng;
+
+		public Position(double lat, double lng) {
+			this.lat = lat;
+			this.lng = lng;
+		}
+
+		public double getLat() {
+			return lat;
+		}
+
+		public double getLng() {
+			return lng;
 		}
 
 	}

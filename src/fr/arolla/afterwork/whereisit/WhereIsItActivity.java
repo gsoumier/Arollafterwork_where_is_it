@@ -41,6 +41,9 @@ public class WhereIsItActivity extends MapActivity {
 	private static final double PARIS_LAT = 48.860649;
 	private static final double PARIS_LNG = 2.352448;
 
+	private static final double FRANCE_LAT = 46.640568;
+	private static final double FRANCE_LNG = 2.527843;
+
 	private Location photoLocation;
 	private GeoPoint photoGeoPoint;
 	private String photoDescription;
@@ -59,6 +62,7 @@ public class WhereIsItActivity extends MapActivity {
 		initPhotoInformations();
 
 		mapView = (MapView) findViewById(R.id.map_view);
+		mapView.setBuiltInZoomControls(true);
 		mapController = mapView.getController();
 		mapView.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -69,9 +73,12 @@ public class WhereIsItActivity extends MapActivity {
 			}
 		});
 
-		GeoPoint paris = getGeoPoint(PARIS_LAT, PARIS_LNG);
-		mapController.animateTo(paris);
-		mapController.setZoom(13);
+		// GeoPoint paris = getGeoPoint(PARIS_LAT, PARIS_LNG);
+		// mapController.animateTo(paris);
+		// mapController.setZoom(13);
+		GeoPoint franceCenter = getGeoPoint(FRANCE_LAT, FRANCE_LNG);
+		mapController.animateTo(franceCenter);
+		mapController.setZoom(7);
 
 		Drawable starIconOff = Resources.getSystem().getDrawable(
 				android.R.drawable.btn_star_big_off);
