@@ -13,23 +13,26 @@ public final class R {
     public static final class drawable {
         public static final int btn_check_buttonless_on=0x7f020000;
         public static final int ic_menu_forward=0x7f020001;
-        public static final int where_is_it_icon=0x7f020002;
+        public static final int welcome=0x7f020002;
+        public static final int where_is_it_icon=0x7f020003;
     }
     public static final class id {
-        public static final int action_next=0x7f060008;
-        public static final int action_validate=0x7f060007;
+        public static final int action_next=0x7f060009;
+        public static final int action_validate=0x7f060008;
         public static final int image=0x7f060000;
-        public static final int map_view=0x7f060005;
-        public static final int play=0x7f060006;
-        public static final int question=0x7f060002;
+        public static final int map_view=0x7f060006;
+        public static final int play=0x7f060007;
+        public static final int question=0x7f060003;
         public static final int score=0x7f060001;
-        public static final int text=0x7f060003;
-        public static final int validate=0x7f060004;
+        public static final int text=0x7f060004;
+        public static final int validate=0x7f060005;
+        public static final int welcome_image=0x7f060002;
     }
     public static final class layout {
         public static final int main=0x7f030000;
         public static final int result=0x7f030001;
-        public static final int where_is_it=0x7f030002;
+        public static final int welcome=0x7f030002;
+        public static final int where_is_it=0x7f030003;
     }
     public static final class menu {
         public static final int main_menu=0x7f050000;

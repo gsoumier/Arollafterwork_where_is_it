@@ -176,10 +176,10 @@ public class MainActivity extends Activity {
 		case SHOW_MAP:
 			if (resultCode == Activity.RESULT_OK) {
 				int distance = data.getIntExtra("distance", 1000);
-				float score = getPointsFromDistance(distance);
+				int score = getPointsFromDistance(distance);
 				totalScore += score;
 				showNextPhotoOrResult();
-				Toast.makeText(this, Float.toString(score), 500).show();
+				Toast.makeText(this, "" + score, 500).show();
 			}
 			break;
 
@@ -188,11 +188,12 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	private float getPointsFromDistance(int distance) {
-		if (distance > 20000)
+	private int getPointsFromDistance(int distance) {
+		int maxDistanceForPoints = 100000;
+		if (distance > maxDistanceForPoints)
 			return 0;
-		float coeff = 1f - (float) distance / 20000f;
-		float result = 10 * coeff;
+		int points = maxDistanceForPoints - distance / maxDistanceForPoints;
+		int result = (points * 100) / maxDistanceForPoints;
 		return result;
 	}
 

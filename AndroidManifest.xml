@@ -14,7 +14,13 @@
         
     	<uses-library android:name="com.google.android.maps"/>
         
-        <activity android:name="MainActivity" android:label="@string/activity_main">
+        <activity android:name="WelcomeActivity" android:label="@string/activity_main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- activity android:name="MainActivity" android:label="@string/activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,6 +37,6 @@
                 <action android:name="Result" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity-->
     </application>
 </manifest>
