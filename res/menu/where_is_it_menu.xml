@@ -3,11 +3,9 @@
     <item android:id="@+id/action_validate"
           android:icon="@drawable/btn_check_buttonless_on" 
           android:title="@string/action_item_validate"
-          android:visible="false"
-          android:showAsAction="always"/>
+          android:visible="false"/>
     <item android:id="@+id/action_next"
           android:icon="@drawable/ic_menu_forward"
           android:title="@string/action_item_next"
-          android:visible="false"
-          android:showAsAction="always"/>
+          android:visible="false"/>
 </menu>

@@ -44,6 +44,10 @@ public class PicasaAlbum implements Iterable<PicasaPhoto> {
 		photos.remove(photo);
 	}
 
+	public PicasaPhoto getPhoto(int index) {
+		return photos.get(index);
+	}
+
 	public int albumSize() {
 		return photos.size();
 	}

@@ -2,7 +2,6 @@ package fr.arolla.afterwork.whereisit;
 
 import java.util.List;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -55,10 +54,6 @@ public class WhereIsItActivity extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.where_is_it);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("1/10");
-		actionBar.setSubtitle("Placer sur la carte");
-
 		initPhotoInformations();
 
 		mapView = (MapView) findViewById(R.id.map_view);
@@ -68,7 +63,6 @@ public class WhereIsItActivity extends MapActivity {
 			public void onClick(View v) {
 				if (!showValidateBtn && !showNextBtn) {
 					showValidateBtn = true;
-					invalidateOptionsMenu();
 				}
 			}
 		});
@@ -144,7 +138,6 @@ public class WhereIsItActivity extends MapActivity {
 		distance = Math.round(distanceTo);
 		String subTitle = getResources().getString(R.string.distance)
 				+ distance + getResources().getString(R.string.meters);
-		getActionBar().setSubtitle(subTitle);
 		Drawable starIconOn = Resources.getSystem().getDrawable(
 				android.R.drawable.btn_star_big_on);
 		ItIsHereOverlay resultOverlay = new ItIsHereOverlay(starIconOn,
@@ -154,7 +147,6 @@ public class WhereIsItActivity extends MapActivity {
 		mapController.animateTo(photoGeoPoint);
 		showNextBtn = true;
 		showValidateBtn = false;
-		invalidateOptionsMenu();
 	}
 
 	private void goToNextPhoto() {

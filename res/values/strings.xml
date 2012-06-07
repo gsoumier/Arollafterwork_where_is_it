@@ -3,6 +3,7 @@
 
     <string name="where_is_it">Où est-ce ?</string>
     <string name="app_name">Where Is It ?</string>
+    <string name="welcome_desc">Welcome</string>
     <string name="activity_main">Où est-ce ?</string>
     <string name="activity_where_is_it">Placer sur la carte</string>
     <string name="activity_result">Résultat</string>
