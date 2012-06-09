@@ -10,9 +10,13 @@
     <string name="new_game">Nouvelle partie</string>
     <string name="action_item_validate">Valider</string>
     <string name="action_item_play">Jouer</string>
+    <string name="button_play">Jouer</string>
     <string name="action_item_next">Poursuivre</string>
     <string name="result">Votre resultat : </string>
     <string name="distance">Distance : </string>
     <string name="meters"> mètres</string>
+    <string name="star1">star1</string>
+    <string name="star2">star2</string>
+    <string name="star3">star3</string>
 
 </resources>

@@ -37,12 +37,9 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 
 		Element mediaGroupElement = photoElement.getChild(MEDIA_NS, "group");
 		Element photoTitle = mediaGroupElement.getChild(MEDIA_NS, "title");
-		Element photoDescription = mediaGroupElement.getChild(MEDIA_NS,
-				"description");
-		Element photoContentElement = mediaGroupElement.getChild(MEDIA_NS,
-				"content");
-		Element photoThumbnailElement = mediaGroupElement.getChild(MEDIA_NS,
-				"thumbnail");
+		Element photoDescription = mediaGroupElement.getChild(MEDIA_NS, "description");
+		Element photoContentElement = mediaGroupElement.getChild(MEDIA_NS, "content");
+		Element photoThumbnailElement = mediaGroupElement.getChild(MEDIA_NS, "thumbnail");
 
 		Element geoRssElement = photoElement.getChild(GEO_RSS_NS, "where");
 		Element gmlPointElement = geoRssElement.getChild(GML_NS, "Point");
@@ -54,12 +51,11 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 			}
 		});
 
-		albumTitleElement
-				.setEndTextElementListener(new EndTextElementListener() {
-					public void end(String body) {
-						album.setTitle(body);
-					}
-				});
+		albumTitleElement.setEndTextElementListener(new EndTextElementListener() {
+			public void end(String body) {
+				album.title = body;
+			}
+		});
 
 		photoElement.setStartElementListener(new StartElementListener() {
 			public void start(Attributes attributes) {
@@ -69,6 +65,10 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 
 		photoElement.setEndElementListener(new EndElementListener() {
 			public void end() {
+				if (photo.getLatitude() == null || photo.getLongitude() == null) {
+					photo = null;
+					return;
+				}
 				album.addPhoto(photo);
 			}
 		});
@@ -85,12 +85,11 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 			}
 		});
 
-		photoDescription
-				.setEndTextElementListener(new EndTextElementListener() {
-					public void end(String body) {
-						photo.setDescription(body);
-					}
-				});
+		photoDescription.setEndTextElementListener(new EndTextElementListener() {
+			public void end(String body) {
+				photo.setDescription(body);
+			}
+		});
 
 		photoContentElement.setStartElementListener(new StartElementListener() {
 			public void start(Attributes attributes) {
@@ -99,13 +98,12 @@ public class PicasaAlbumXmlHandler extends DefaultHandler {
 			}
 		});
 
-		photoThumbnailElement
-				.setStartElementListener(new StartElementListener() {
-					public void start(Attributes attributes) {
-						String thumbnailUrl = attributes.getValue("url");
-						photo.addThumbnailUrl(thumbnailUrl);
-					}
-				});
+		photoThumbnailElement.setStartElementListener(new StartElementListener() {
+			public void start(Attributes attributes) {
+				String thumbnailUrl = attributes.getValue("url");
+				photo.addThumbnailUrl(thumbnailUrl);
+			}
+		});
 
 		gmlPosElement.setEndTextElementListener(new EndTextElementListener() {
 			public void end(String body) {

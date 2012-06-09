@@ -20,23 +20,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ShowPhotoActivity" android:label="@string/activity_main">
+        <activity android:name=".ShowPhotoActivity">
             <intent-filter>
                 <action android:name="ShowPhoto" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- activity android:name=".WhereIsItActivity" android:label="@string/activity_where_is_it">
+        <activity android:name=".WhereIsItActivity">
             <intent-filter>
                 <action android:name="WhereIsIt" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ResultActivity" android:label="@string/activity_result" >
+        <activity android:name=".ResultActivity">
             <intent-filter>
                 <action android:name="Result" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity-->
+        </activity>
     </application>
 </manifest>

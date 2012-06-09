@@ -1,6 +1,7 @@
 package fr.arolla.afterwork.whereisit.overlays;
 
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -9,9 +10,12 @@ public class UserResultsOverlay extends ItIsHereOverlay {
 
 	private GeoPoint point;
 	private boolean isEnabled = true;
+	private final Handler handler;
 
-	public UserResultsOverlay(Drawable marker) {
+	public UserResultsOverlay(Drawable marker, Handler handler) {
 		super(marker, null, "Here ?", "Are you sure ?");
+		this.handler = handler;
+
 	}
 
 	@Override
@@ -23,7 +27,7 @@ public class UserResultsOverlay extends ItIsHereOverlay {
 		this.point = point;
 		changePoint(point);
 		mapView.refreshDrawableState();
-		mapView.performClick();
+		handler.sendEmptyMessage(23);
 		return true;
 	}
 

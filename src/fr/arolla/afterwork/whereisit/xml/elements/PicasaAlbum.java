@@ -8,7 +8,7 @@ public class PicasaAlbum implements Iterable<PicasaPhoto> {
 
 	private String id;
 
-	private String title;
+	public String title;
 
 	private List<PicasaPhoto> photos = new ArrayList<PicasaPhoto>();
 
@@ -18,14 +18,6 @@ public class PicasaAlbum implements Iterable<PicasaPhoto> {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public List<PicasaPhoto> getPhotos() {

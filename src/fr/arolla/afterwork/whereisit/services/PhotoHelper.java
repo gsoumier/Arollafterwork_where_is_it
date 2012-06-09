@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
-import fr.arolla.afterwork.whereisit.xml.elements.PicasaPhoto;
 import fr.arolla.afterwork.whereisit.xml.parser.PicasaAlbumXmlHandler;
 
 public class PhotoHelper {
@@ -44,38 +43,7 @@ public class PhotoHelper {
 					+ url, e);
 		}
 
-		addGeoInformation(picasaAlbum);
 		return picasaAlbum;
-	}
-
-	/*
-	 * FIXME : problème de parsing des infos géolocalisées
-	 */
-	static void addGeoInformation(PicasaAlbum picasaAlbum) {
-		for (PicasaPhoto picasaPhoto : picasaAlbum) {
-			String photoId = picasaPhoto.getId();
-			if (photoId
-					.equals("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748107040104845138")) {
-				picasaPhoto.setLatitude(48.865916);
-				picasaPhoto.setLongitude(2.225677);
-			} else if (photoId
-					.equals("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748477498962023090")) {
-				picasaPhoto.setLatitude(48.612729);
-				picasaPhoto.setLongitude(-1.505180);
-			} else if (photoId
-					.equals("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748478389030221938")) {
-				picasaPhoto.setLatitude(45.767500);
-				picasaPhoto.setLongitude(4.828889);
-			} else if (photoId
-					.equals("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748478868755550402")) {
-				picasaPhoto.setLatitude(45.328611);
-				picasaPhoto.setLongitude(3.708611);
-			} else if (photoId
-					.equals("https://picasaweb.google.com/data/entry/api/user/114060422820973437445/albumid/5734132424019816081/photoid/5748479441511849042")) {
-				picasaPhoto.setLatitude(-22.947447);
-				picasaPhoto.setLongitude(-43.1564);
-			}
-		}
 	}
 
 }

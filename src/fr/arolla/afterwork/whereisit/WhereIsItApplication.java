@@ -12,7 +12,7 @@ public class WhereIsItApplication extends Application {
 		return singleton;
 	}
 
-	private PicasaAlbum album;
+	public PicasaAlbum album;
 
 	@Override
 	public final void onCreate() {

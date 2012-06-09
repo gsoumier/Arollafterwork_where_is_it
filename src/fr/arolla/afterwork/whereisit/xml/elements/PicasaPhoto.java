@@ -97,8 +97,7 @@ public class PicasaPhoto {
 
 	@Override
 	public String toString() {
-		return "PicasaPhoto{title=" + title + ",id=" + id + ",desc="
-				+ description + "}";
+		return "PicasaPhoto{title=" + title + ",id=" + id + ",desc=" + description + "}";
 	}
 
 }

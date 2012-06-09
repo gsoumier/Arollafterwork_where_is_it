@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import fr.arolla.afterwork.whereisit.services.PhotoHelper;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
 
@@ -29,7 +31,13 @@ public class WelcomeActivity extends Activity {
 		@Override
 		protected void onPostExecute(PicasaAlbum result) {
 			WhereIsItApplication.getInstance().setAlbum(result);
-			startShowPhotoActivity();
+			View buttonPlay = findViewById(R.id.button_play);
+			buttonPlay.setVisibility(View.VISIBLE);
+			buttonPlay.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					startShowPhotoActivity();
+				}
+			});
 		}
 
 	}
