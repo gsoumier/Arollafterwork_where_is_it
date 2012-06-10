@@ -17,9 +17,8 @@ public final class R {
         public static final int where_is_it_icon=0x7f020003;
     }
     public static final class id {
-        public static final int button_play=0x7f05000a;
         public static final int layout_root=0x7f050005;
-        public static final int map_view=0x7f05000b;
+        public static final int map_view=0x7f05000a;
         public static final int photoThumb=0x7f050000;
         public static final int resultgrid=0x7f050004;
         public static final int star1=0x7f050006;

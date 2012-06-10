@@ -3,7 +3,6 @@ package fr.arolla.afterwork.whereisit;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import fr.arolla.afterwork.whereisit.services.PhotoHelper;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
 
@@ -29,11 +28,6 @@ public class WelcomeActivity extends Activity {
 		@Override
 		protected void onPostExecute(PicasaAlbum result) {
 			WhereIsItApplication.getInstance().setAlbum(result);
-
-			// START Iter. 0
-			View buttonPlay = findViewById(R.id.button_play);
-			buttonPlay.setVisibility(View.VISIBLE);
-			// END Iter. 0
 		}
 
 	}
