@@ -11,7 +11,7 @@ import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
 
 public class WelcomeActivity extends Activity {
 
-	private String albumUrl = "https://picasaweb.google.com/data/feed/api/user/germain.soumier/albumid/5734132424019816081";
+	private final String albumUrl = "https://picasaweb.google.com/data/feed/api/user/germain.soumier/albumid/5734132424019816081";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +31,25 @@ public class WelcomeActivity extends Activity {
 		@Override
 		protected void onPostExecute(PicasaAlbum result) {
 			WhereIsItApplication.getInstance().setAlbum(result);
+
+			// START Iter. 0
 			View buttonPlay = findViewById(R.id.button_play);
 			buttonPlay.setVisibility(View.VISIBLE);
+			// START Iter. 1
 			buttonPlay.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					startShowPhotoActivity();
 				}
 			});
+			// END Iter. 1
+			// END Iter. 0
 		}
 
 	}
 
+	/*
+	 * START Iter. 1
+	 */
 	void startShowPhotoActivity() {
 		Intent intent = new Intent("ShowPhoto");
 		intent.putExtra("photoIndex", 0);

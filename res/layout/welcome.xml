@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:contentDescription="@string/welcome_desc"
         android:src="@drawable/welcome"/>
-
+<!-- START Ex. 0 -->
     <Button
         android:id="@+id/button_play"
         android:layout_width="wrap_content"
@@ -19,5 +19,5 @@
         android:layout_centerVertical="true"
         android:visibility="invisible"
         android:text="@string/button_play"/>
-    
+<!-- END Ex. 0 -->    
 </RelativeLayout>

@@ -9,37 +9,45 @@ import com.google.android.maps.MapView;
 public class UserResultOverlay extends ItIsHereOverlay {
 
 	private boolean isEnabled = true;
-	private final Handler handler;
+	private Handler handler;
 
-	public UserResultOverlay(Drawable marker, Handler handler) {
+	public UserResultOverlay(Drawable marker) {
 		super(marker, null);
-		this.handler = handler;
-
 	}
 
+	/*
+	 * Iter 3. etape 2)
+	 */
+	public UserResultOverlay(Drawable marker, Handler handler) {
+		this(marker);
+		this.handler = handler;
+	}
+
+	/*
+	 * Iter 2. etape 3)
+	 */
 	@Override
 	public boolean onTap(GeoPoint point, MapView mapView) {
+		// START Iter 4. etape 2)
 		if (!isEnabled) {
 			return false;
 		}
+		// END Iter 4. etape 2)
 
 		this.point = point;
 		populate();
 		mapView.refreshDrawableState();
+
+		// START Iter. 3 etape 2)
 		handler.sendEmptyMessage(0);
+		// END Iter. 3 etape 2)
 		return true;
 	}
 
-	public boolean isEnabled() {
-		return isEnabled;
-	}
-
+	// START Iter. 4 etape 2)
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
-
-	public GeoPoint getPoint() {
-		return point;
-	}
+	// END Iter. 4 etape 2)
 
 }
