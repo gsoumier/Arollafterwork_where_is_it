@@ -20,12 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowPhotoActivity">
-            <intent-filter>
-                <action android:name="ShowPhoto" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".WhereIsItActivity">
             <intent-filter>
                 <action android:name="WhereIsIt" />

@@ -1,11 +1,9 @@
 package fr.arolla.afterwork.whereisit;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import fr.arolla.afterwork.whereisit.services.PhotoHelper;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaAlbum;
 
@@ -35,25 +33,9 @@ public class WelcomeActivity extends Activity {
 			// START Iter. 0
 			View buttonPlay = findViewById(R.id.button_play);
 			buttonPlay.setVisibility(View.VISIBLE);
-			// START Iter. 1
-			buttonPlay.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					startShowPhotoActivity();
-				}
-			});
-			// END Iter. 1
 			// END Iter. 0
 		}
 
-	}
-
-	/*
-	 * START Iter. 1
-	 */
-	void startShowPhotoActivity() {
-		Intent intent = new Intent("ShowPhoto");
-		intent.putExtra("photoIndex", 0);
-		startActivity(intent);
 	}
 
 }

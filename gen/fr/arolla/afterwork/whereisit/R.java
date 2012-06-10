@@ -17,27 +17,25 @@ public final class R {
         public static final int where_is_it_icon=0x7f020003;
     }
     public static final class id {
-        public static final int button_play=0x7f05000b;
+        public static final int button_play=0x7f05000a;
         public static final int layout_root=0x7f050005;
-        public static final int map_view=0x7f05000c;
+        public static final int map_view=0x7f05000b;
         public static final int photoThumb=0x7f050000;
         public static final int resultgrid=0x7f050004;
-        public static final int show_photo=0x7f050009;
         public static final int star1=0x7f050006;
         public static final int star2=0x7f050007;
         public static final int star3=0x7f050008;
         public static final int starResult1=0x7f050001;
         public static final int starResult2=0x7f050002;
         public static final int starResult3=0x7f050003;
-        public static final int welcome_image=0x7f05000a;
+        public static final int welcome_image=0x7f050009;
     }
     public static final class layout {
         public static final int photo_result=0x7f030000;
         public static final int result=0x7f030001;
         public static final int score_dialog=0x7f030002;
-        public static final int show_photo=0x7f030003;
-        public static final int welcome=0x7f030004;
-        public static final int where_is_it=0x7f030005;
+        public static final int welcome=0x7f030003;
+        public static final int where_is_it=0x7f030004;
     }
     public static final class string {
         public static final int action_item_next=0x7f04000a;
