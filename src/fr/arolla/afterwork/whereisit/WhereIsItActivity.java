@@ -5,7 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
@@ -45,7 +44,6 @@ public class WhereIsItActivity extends MapActivity {
 
 	// START Iter. 3 etape 2)
 	private boolean validateItemVisble;
-	private boolean nextItemVisible;
 	// END Iter. 3 etape 2)
 
 	private int photoIndex;
@@ -140,7 +138,6 @@ public class WhereIsItActivity extends MapActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.findItem(R.id.action_validate).setVisible(validateItemVisble);
-		menu.findItem(R.id.action_next).setVisible(nextItemVisible);
 		return true;
 	}
 
@@ -154,11 +151,6 @@ public class WhereIsItActivity extends MapActivity {
 			validatePosition();
 			return true;
 			// END Iter. 3 etape 3)
-			// START Iter. 5 etape 2)
-		case R.id.action_next:
-			goToNextPhotoOrResult();
-			return true;
-			// END Iter. 5 etape 2)
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -179,7 +171,6 @@ public class WhereIsItActivity extends MapActivity {
 
 		// START Iter. 3 etape 2)
 		validateItemVisble = false;
-		nextItemVisible = true;
 		invalidateOptionsMenu();
 		// END Iter. 3 etape 2)
 
@@ -221,19 +212,6 @@ public class WhereIsItActivity extends MapActivity {
 		star1.setImageResource(scoreStarIcons[0]);
 		star2.setImageResource(scoreStarIcons[1]);
 		star3.setImageResource(scoreStarIcons[2]);
-	}
-
-	/*
-	 * Iter. 5 etape 2) et 3)
-	 */
-	private void goToNextPhotoOrResult() {
-		if (++photoIndex < WhereIsItApplication.getInstance().album.albumSize()) {
-			Intent nextPhoto = new Intent("ShowPhoto");
-			nextPhoto.putExtra("photoIndex", photoIndex);
-			startActivity(nextPhoto);
-		} else {
-			startActivity(new Intent("Result"));
-		}
 	}
 
 	private Location getLocationFromGeoPoint(GeoPoint userAnswerPoint) {

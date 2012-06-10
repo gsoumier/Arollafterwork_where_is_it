@@ -5,9 +5,4 @@
           android:title="@string/action_item_validate"
           android:visible="false"
           android:showAsAction="always"/>
-    <item android:id="@+id/action_next"
-          android:icon="@drawable/button_next"
-          android:title="@string/action_item_next"
-          android:visible="false"
-          android:showAsAction="always"/>
 </menu>

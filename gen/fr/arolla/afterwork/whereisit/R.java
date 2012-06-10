@@ -17,7 +17,6 @@ public final class R {
         public static final int where_is_it_icon=0x7f020003;
     }
     public static final class id {
-        public static final int action_next=0x7f06000e;
         public static final int action_validate=0x7f06000d;
         public static final int button_play=0x7f06000b;
         public static final int layout_root=0x7f060005;
