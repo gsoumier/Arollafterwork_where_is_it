@@ -6,12 +6,6 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -36,10 +30,6 @@ public class WhereIsItActivity extends MapActivity {
 	 * Iter. 2 etape 2)
 	 */
 	private UserResultOverlay userResultsOverlay;
-
-	// START Iter. 3 etape 2)
-	private boolean validateItemVisble;
-	// END Iter. 3 etape 2)
 
 	private int photoIndex;
 	private PicasaPhoto photo;
@@ -89,61 +79,9 @@ public class WhereIsItActivity extends MapActivity {
 	 * Iter 2. etape 2)
 	 */
 	void addUserResultOverlay() {
-
-		// userResultsOverlay = new
-		// UserResultOverlay(Resources.getSystem().getDrawable(
-		// android.R.drawable.btn_star_big_off));
-
-		// START Iter. 3 etape 2)
 		userResultsOverlay = new UserResultOverlay(Resources.getSystem().getDrawable(
-				android.R.drawable.btn_star_big_off), new SelectionHandler());
+				android.R.drawable.btn_star_big_off));
 		overlays.add(userResultsOverlay);
-		// END Iter. 3 etape 2)
-	}
-
-	/*
-	 * Iter 3. etape 2)
-	 */
-	class SelectionHandler extends Handler {
-		@Override
-		public void handleMessage(Message msg) {
-			if (!validateItemVisble) {
-				validateItemVisble = true;
-				invalidateOptionsMenu();
-			}
-		}
-	}
-
-	// START Iter. 3 etape 1)
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.where_is_it_menu, menu);
-		return true;
-	}
-
-	// END Iter. 3 etape 1)
-
-	// START Iter. 3 etape 2)
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		menu.findItem(R.id.action_validate).setVisible(validateItemVisble);
-		return true;
-	}
-
-	// END Iter. 3 etape 2)
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		// START Iter. 3 etape 3)
-		case R.id.action_validate:
-			Toast.makeText(this, "click sur activer", 1000).show();
-			return true;
-			// END Iter. 3 etape 3)
-		default:
-			return super.onOptionsItemSelected(item);
-		}
 	}
 
 	private Location getLocationFromGeoPoint(GeoPoint userAnswerPoint) {
