@@ -1,10 +1,7 @@
 package fr.arolla.afterwork.whereisit;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import android.app.Dialog;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
@@ -14,7 +11,7 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -22,10 +19,8 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
-import fr.arolla.afterwork.whereisit.overlays.ItIsHereOverlay;
 import fr.arolla.afterwork.whereisit.overlays.UserResultOverlay;
 import fr.arolla.afterwork.whereisit.services.ActionBarHelper;
-import fr.arolla.afterwork.whereisit.services.ScoreHelper;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaPhoto;
 
 public class WhereIsItActivity extends MapActivity {
@@ -50,11 +45,6 @@ public class WhereIsItActivity extends MapActivity {
 	private PicasaPhoto photo;
 	private Location photoLocation;
 	private GeoPoint photoGeoPoint;
-
-	/*
-	 * Iter 4 etape 4)
-	 */
-	private Dialog scoreDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -148,70 +138,12 @@ public class WhereIsItActivity extends MapActivity {
 		switch (item.getItemId()) {
 		// START Iter. 3 etape 3)
 		case R.id.action_validate:
-			validatePosition();
+			Toast.makeText(this, "click sur activer", 1000).show();
 			return true;
 			// END Iter. 3 etape 3)
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	/*
-	 * Iter. 4 etape 1)
-	 */
-	private void validatePosition() {
-		ItIsHereOverlay resultOverlay = new ItIsHereOverlay(Resources.getSystem().getDrawable(
-				android.R.drawable.btn_star_big_on), photoGeoPoint);
-		overlays.add(resultOverlay);
-		mapController.animateTo(photoGeoPoint);
-
-		// START Iter. 4 etape 2)
-		userResultsOverlay.setEnabled(false);
-		// END Iter. 4 etape 2)
-
-		// START Iter. 3 etape 2)
-		validateItemVisble = false;
-		invalidateOptionsMenu();
-		// END Iter. 3 etape 2)
-
-		// START Iter. 4 etape 3)
-		GeoPoint userAnswerPoint = userResultsOverlay.getPoint();
-		Location userAnswerLocation = getLocationFromGeoPoint(userAnswerPoint);
-		float distanceTo = photoLocation.distanceTo(userAnswerLocation);
-		int distance = Math.round(distanceTo / 100) * 100;
-
-		// new Toast(this).makeText(this, distance, 2000).show();
-		// END Iter. 4 etape 3)
-
-		// START Iter. 4 etape 4)
-		createScoreDialog(distance);
-		scoreDialog.show();
-
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				scoreDialog.cancel();
-			}
-		}, 2000);
-		// END Iter. 4 etape 4)
-	}
-
-	/*
-	 * Iter. 4 etape 4)
-	 */
-	private void createScoreDialog(int distance) {
-		scoreDialog = new Dialog(this);
-		scoreDialog.setContentView(R.layout.score_dialog);
-		String distanceResult = getResources().getString(R.string.distance) + " " + distance + " "
-				+ getResources().getString(R.string.meters);
-		scoreDialog.setTitle(distanceResult);
-		ImageView star1 = (ImageView) scoreDialog.findViewById(R.id.star1);
-		ImageView star2 = (ImageView) scoreDialog.findViewById(R.id.star2);
-		ImageView star3 = (ImageView) scoreDialog.findViewById(R.id.star3);
-		Integer[] scoreStarIcons = ScoreHelper.getScoreStarIcons(distance);
-		star1.setImageResource(scoreStarIcons[0]);
-		star2.setImageResource(scoreStarIcons[1]);
-		star3.setImageResource(scoreStarIcons[2]);
 	}
 
 	private Location getLocationFromGeoPoint(GeoPoint userAnswerPoint) {
