@@ -1,12 +1,9 @@
 package fr.arolla.afterwork.whereisit;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import fr.arolla.afterwork.whereisit.services.ActionBarHelper;
 import fr.arolla.afterwork.whereisit.services.PhotoHelper;
@@ -57,16 +54,6 @@ public class ShowPhotoActivity extends Activity {
 		@Override
 		protected void onPostExecute(Bitmap result) {
 			showPhotoView.setImageBitmap(result);
-
-			// START Iter 2 etape 1)
-			showPhotoView.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					Intent showMap = new Intent("WhereIsIt");
-					showMap.putExtra("photoIndex", photoIndex);
-					startActivity(showMap);
-				}
-			});
-			// END Iter 2 etape 1)
 		}
 	}
 }

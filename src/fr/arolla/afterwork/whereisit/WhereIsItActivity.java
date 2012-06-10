@@ -2,7 +2,6 @@ package fr.arolla.afterwork.whereisit;
 
 import java.util.List;
 
-import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
-import fr.arolla.afterwork.whereisit.overlays.UserResultOverlay;
 import fr.arolla.afterwork.whereisit.services.ActionBarHelper;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaPhoto;
 
@@ -25,11 +23,6 @@ public class WhereIsItActivity extends MapActivity {
 	private MapView mapView;
 	private MapController mapController;
 	private List<Overlay> overlays;
-
-	/*
-	 * Iter. 2 etape 2)
-	 */
-	private UserResultOverlay userResultsOverlay;
 
 	private int photoIndex;
 	private PicasaPhoto photo;
@@ -47,9 +40,6 @@ public class WhereIsItActivity extends MapActivity {
 
 		initMapAndOverlayObjects();
 
-		// START Iter. 2 etape 2)
-		addUserResultOverlay();
-		// END Iter. 2 etape 2)
 	}
 
 	private void initPhotoInformations() {
@@ -73,15 +63,6 @@ public class WhereIsItActivity extends MapActivity {
 		mapController.setZoom(7);
 
 		overlays = mapView.getOverlays();
-	}
-
-	/*
-	 * Iter 2. etape 2)
-	 */
-	void addUserResultOverlay() {
-		userResultsOverlay = new UserResultOverlay(Resources.getSystem().getDrawable(
-				android.R.drawable.btn_star_big_off));
-		overlays.add(userResultsOverlay);
 	}
 
 	private Location getLocationFromGeoPoint(GeoPoint userAnswerPoint) {
