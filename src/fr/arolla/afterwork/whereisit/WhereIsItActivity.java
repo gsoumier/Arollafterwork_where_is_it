@@ -24,7 +24,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
 import fr.arolla.afterwork.whereisit.overlays.ItIsHereOverlay;
-import fr.arolla.afterwork.whereisit.overlays.UserResultsOverlay;
+import fr.arolla.afterwork.whereisit.overlays.UserResultOverlay;
 import fr.arolla.afterwork.whereisit.services.ActionBarHelper;
 import fr.arolla.afterwork.whereisit.services.ScoreHelper;
 import fr.arolla.afterwork.whereisit.xml.elements.PicasaPhoto;
@@ -38,7 +38,7 @@ public class WhereIsItActivity extends MapActivity {
 	private MapController mapController;
 	private List<Overlay> overlays;
 
-	private UserResultsOverlay userResultsOverlay;
+	private UserResultOverlay userResultsOverlay;
 
 	private boolean validateItemVisble;
 	private boolean nextItemVisible;
@@ -60,11 +60,15 @@ public class WhereIsItActivity extends MapActivity {
 		ActionBarHelper.fillActionBarProperties(getActionBar(), photoIndex, photo.getDescription());
 
 		initMapAndOverlayObjects();
+
+		addUserResultOverlay();
 	}
 
 	private void initPhotoInformations() {
 		photoIndex = getIntent().getIntExtra("photoIndex", -1);
 		photo = WhereIsItApplication.getInstance().getPhoto(photoIndex);
+		if (photo == null)
+			throw new RuntimeException("no photo found corresponding to index " + photoIndex);
 		photoLocation = new Location(LocationManager.GPS_PROVIDER);
 		photoLocation.setLatitude(photo.getLatitude());
 		photoLocation.setLongitude(photo.getLongitude());
@@ -74,17 +78,17 @@ public class WhereIsItActivity extends MapActivity {
 	void initMapAndOverlayObjects() {
 		mapView = (MapView) findViewById(R.id.map_view);
 		mapView.setBuiltInZoomControls(true);
-		mapController = mapView.getController();
-
-		GeoPoint franceCenter = getGeoPoint(FRANCE_LAT, FRANCE_LNG);
-		mapController.animateTo(franceCenter);
-		mapController.setZoom(7);
-		mapView.buildDrawingCache();
 		mapView.setSatellite(true);
 
-		overlays = mapView.getOverlays();
+		mapController = mapView.getController();
+		mapController.animateTo(getGeoPoint(FRANCE_LAT, FRANCE_LNG));
+		mapController.setZoom(7);
 
-		userResultsOverlay = new UserResultsOverlay(Resources.getSystem().getDrawable(
+		overlays = mapView.getOverlays();
+	}
+
+	void addUserResultOverlay() {
+		userResultsOverlay = new UserResultOverlay(Resources.getSystem().getDrawable(
 				android.R.drawable.btn_star_big_off), new SelectionHandler());
 		overlays.add(userResultsOverlay);
 	}
@@ -128,15 +132,16 @@ public class WhereIsItActivity extends MapActivity {
 	}
 
 	private void validatePosition() {
+		ItIsHereOverlay resultOverlay = new ItIsHereOverlay(Resources.getSystem().getDrawable(
+				android.R.drawable.btn_star_big_on), photoGeoPoint);
+		overlays.add(resultOverlay);
+		userResultsOverlay.setEnabled(false);
+		mapController.animateTo(photoGeoPoint);
+
 		GeoPoint userAnswerPoint = userResultsOverlay.getPoint();
 		Location userAnswerLocation = getUserAnswerLocation(userAnswerPoint);
 		float distanceTo = photoLocation.distanceTo(userAnswerLocation);
 		int distance = Math.round(distanceTo / 100) * 100;
-		ItIsHereOverlay resultOverlay = new ItIsHereOverlay(Resources.getSystem().getDrawable(
-				android.R.drawable.btn_star_big_on), photoGeoPoint, photo.getDescription(), "test");
-		overlays.add(resultOverlay);
-		userResultsOverlay.setEnabled(false);
-		mapController.animateTo(photoGeoPoint);
 
 		validateItemVisble = false;
 		nextItemVisible = true;

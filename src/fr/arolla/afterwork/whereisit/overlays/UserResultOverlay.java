@@ -6,14 +6,13 @@ import android.os.Handler;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 
-public class UserResultsOverlay extends ItIsHereOverlay {
+public class UserResultOverlay extends ItIsHereOverlay {
 
-	private GeoPoint point;
 	private boolean isEnabled = true;
 	private final Handler handler;
 
-	public UserResultsOverlay(Drawable marker, Handler handler) {
-		super(marker, null, "Here ?", "Are you sure ?");
+	public UserResultOverlay(Drawable marker, Handler handler) {
+		super(marker, null);
 		this.handler = handler;
 
 	}
@@ -25,9 +24,9 @@ public class UserResultsOverlay extends ItIsHereOverlay {
 		}
 
 		this.point = point;
-		changePoint(point);
+		populate();
 		mapView.refreshDrawableState();
-		handler.sendEmptyMessage(23);
+		handler.sendEmptyMessage(0);
 		return true;
 	}
 

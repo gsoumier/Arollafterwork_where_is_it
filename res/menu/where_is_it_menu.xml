@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_validate"
-          android:icon="@drawable/btn_check_buttonless_on" 
+          android:icon="@drawable/button_validate" 
           android:title="@string/action_item_validate"
           android:visible="false"
           android:showAsAction="always"/>
     <item android:id="@+id/action_next"
-          android:icon="@drawable/ic_menu_forward"
+          android:icon="@drawable/button_next"
           android:title="@string/action_item_next"
           android:visible="false"
           android:showAsAction="always"/>
